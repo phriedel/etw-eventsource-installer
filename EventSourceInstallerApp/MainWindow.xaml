@@ -1,0 +1,191 @@
+﻿<Window x:Class="EventSourceInstallerApp.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:EventSourceInstallerApp"
+		mc:Ignorable="d"
+		Title="Event Source Installer" Height="480.000" Width="640.000" MinHeight="480.000" MinWidth="640.000">
+    <Grid Margin="0,0,-8,-4">
+        <Label x:Name="InstallationPathLabel" Content="Installation path" HorizontalAlignment="Left" Height="34"  Margin="10,0,0,0" VerticalAlignment="Top" ToolTipService.ShowDuration="20000">
+            <Label.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Installation path</TextBlock>
+                        <TextBlock>
+                            When you install a manifest, regarding files will be copied to this destination.
+                            <LineBreak />
+                            Choose central storage for custom event sources for this machine.
+                        </TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </Label.ToolTip>
+        </Label>
+        <TextBox x:Name="InstallationPathTextBox" Height="20" TextWrapping="Wrap" Text="C:\CustomEventSources\" Margin="104,4,157,0" VerticalAlignment="Top" IsReadOnly="True" ToolTipService.ShowDuration="20000">
+            <TextBox.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Installation path</TextBlock>
+                        <TextBlock>
+                            Change the installation path by using the '...' button.
+                        </TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </TextBox.ToolTip>
+        </TextBox>
+        <Button x:Name="ChangeInstallationPathButton" Content="..." Margin="0,6,159,0" VerticalAlignment="Top" Height="16" RenderTransformOrigin="1,0.2" HorizontalAlignment="Right" Width="15" Click="ChangeInstallationPathButton_Click" ToolTipService.ShowDuration="20000">
+            <Button.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Change path</TextBlock>
+                        <TextBlock>
+                            Change the installation path.
+                        </TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
+        <Button x:Name="LoadInstalledManifestsButton" Content="Load installed manifests" Margin="0,4,14,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="138" ToolTipService.ShowDuration="20000" Click="LoadInstalledManifestsButton_Click">
+            <Button.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Load installed manifests</TextBlock>
+                        <TextBlock>
+                            Will load all manifests from destination folder.
+                            <LineBreak />
+                            Before loading installed manifests it will remove all files from list view.
+                        </TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
+        <ListView x:Name="ManifestListView" Margin="10,39,14,39" AllowDrop="True" Drop="ManifestListView_Drop" DragEnter="ManifestListView_DragEnter" DragOver="ManifestListView_DragOver" ToolTipService.ShowDuration="20000" KeyUp="ManifestListView_KeyUp">
+            <ListView.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Manifest list view</TextBlock>
+                        <TextBlock>
+                            Just drag &amp; drop your *.man files here or add files by using 'Add files' button.                                                        
+                            <LineBreak />                            
+                            Only Total Commander opened with admin user rights supports drag &amp; drop.
+                            <LineBreak />
+                            Make sure regarding *.dll files are located beside them.
+                            <LineBreak/>
+                            Delete single items by selecting the row and press delete key.
+                        </TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </ListView.ToolTip>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="140" Header="Manifest">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Manifest}">
+                                    <TextBlock.ToolTip>
+                                        <TextBlock Text="{Binding Manifest}"/>
+                                    </TextBlock.ToolTip>
+								</TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="140" Header="Dll">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Dll}">
+                                    <TextBlock.ToolTip>
+                                        <TextBlock Text="{Binding Dll}"/>
+                                    </TextBlock.ToolTip>
+								</TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="140" Header="Source Path">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SourcePath}">
+                                    <TextBlock.ToolTip>
+                                        <TextBlock Text="{Binding SourcePath}"/>
+                                    </TextBlock.ToolTip>
+								</TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="180" Header="Status Message">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding StatusMessage}">
+                                    <TextBlock.ToolTip>
+                                        <TextBlock Text="{Binding StatusMessage}"/>
+                                    </TextBlock.ToolTip>
+								</TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="AddFilesButton" Content="Add files" HorizontalAlignment="Left" Margin="10,0,0,14" VerticalAlignment="Bottom" Width="75" Height="20" Click="AddFilesButton_Click" ToolTipService.ShowDuration="20000">
+            <Button.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Add files</TextBlock>
+                        <TextBlock>
+                            Adds manifests or regarding dlls to list view.
+                            <LineBreak />
+                            Files shown in the list view can be installed or uninstalled.
+                        </TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
+        <Button x:Name="RemoveFilesButton" Content="Remove files" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Height="20" Click="RemoveFilesButton_Click" Margin="90,0,0,14" ToolTipService.ShowOnDisabled="True" ToolTipService.ShowDuration="20000" IsEnabled="False">
+            <Button.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Remove files</TextBlock>
+                        <TextBlock>
+                            Removes all manifests from list view.
+                            <LineBreak />
+                            Will not delete any physical file.
+                        </TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
+        <Button x:Name="InstallButton" Content="Install" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Height="20" Click="InstallButton_Click" Margin="170,0,0,14" ToolTipService.ShowOnDisabled="True" ToolTipService.ShowDuration="20000" IsEnabled="False">
+            <Button.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Install</TextBlock>
+                        <TextBlock>
+                            Starts installation process for manifests shown in the list view.
+                            <LineBreak />
+                            Copies files to installation path shown above.
+                            <LineBreak />
+                            Check status message to verify successful installation.
+                        </TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
+        <Button x:Name="UninstallButton" Content="Uninstall" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Height="20" Click="UninstallButton_Click" Margin="250,0,0,14" ToolTipService.ShowOnDisabled="True" ToolTipService.ShowDuration="20000" IsEnabled="False">
+            <Button.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Uninstall</TextBlock>
+                        <TextBlock>
+                            Starts uninstall process for manifests shown in the list view.
+                            <LineBreak />
+                            Best approach is to uninstall manifests from installation path.
+                            <LineBreak />
+                            Check status message to verify successful uninstall.
+                            <LineBreak />
+                            Will not delete any physical file.
+                        </TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
+    </Grid>
+</Window>
