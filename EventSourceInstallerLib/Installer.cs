@@ -86,8 +86,8 @@ namespace EventSourceInstallerLib
                 CreateNoWindow = true,
                 UseShellExecute = false,
                 RedirectStandardError = true,
-                RedirectStandardOutput = true,
-                RedirectStandardInput = true,
+                RedirectStandardOutput = false,
+                RedirectStandardInput = false,
 
             });
 

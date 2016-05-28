@@ -9,11 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourceInstallerApp", "EventSourceInstallerApp\EventSourceInstallerApp.csproj", "{FE308C47-600C-4B98-9B77-6F4B530340A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourceConsoleApp", "EventSourceConsoleApp\EventSourceConsoleApp.csproj", "{79629C78-1DBD-4E3C-A865-CC73082AA035}"
+EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -31,8 +29,16 @@ Global
 		{FE308C47-600C-4B98-9B77-6F4B530340A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE308C47-600C-4B98-9B77-6F4B530340A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE308C47-600C-4B98-9B77-6F4B530340A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79629C78-1DBD-4E3C-A865-CC73082AA035}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79629C78-1DBD-4E3C-A865-CC73082AA035}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79629C78-1DBD-4E3C-A865-CC73082AA035}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79629C78-1DBD-4E3C-A865-CC73082AA035}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
