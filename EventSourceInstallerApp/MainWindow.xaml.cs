@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -18,6 +19,7 @@ namespace EventSourceInstallerApp
     {
         #region Member
 
+        TextWriter _out = Console.Out;
         EventSourceInstaller _installer;
         Dictionary<string, ManifestBundle> _manifestDictionary;
         IEnumerable _dataSource;
@@ -85,6 +87,45 @@ namespace EventSourceInstallerApp
 
         #region Buttons
 
+        private void ExecuteConsoleApp(string manFile, string commandArgs)
+        {
+            // The 'RunAs' indicates it needs to be elevated.  
+            var process = Process.Start(new ProcessStartInfo(@"EventSourceInstaller.exe", commandArgs)
+            {
+                //Process will be started as admin
+                Verb = "runAs",
+                //Do not show the shell window
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = false,
+                RedirectStandardInput = false,
+
+            });
+
+            string error = process.StandardError.ReadToEnd();
+
+            _out.WriteLine(String.Format("EventSourceInstaller.exe {0}", commandArgs));
+
+
+            if (!String.IsNullOrEmpty(error))
+            {
+                _out.WriteLine(error);
+                //OnNewStatusMessage(Path.GetFileNameWithoutExtension(manFile), error, EventArgs.Empty);
+            }
+            else
+            {
+                var command = commandArgs.Substring(0, 2)
+                    .Replace("im", "Install manifest")
+                    .Replace("um", "Uninstall manifest");
+                var message = String.Format("{0} successful.", command);
+
+                //OnNewStatusMessage(Path.GetFileNameWithoutExtension(manFile), message, EventArgs.Empty);
+            }
+
+            process.WaitForExit();
+        }
+
         private void InstallButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -92,6 +133,14 @@ namespace EventSourceInstallerApp
                 foreach (var item in ManifestListView.ItemsSource)
                 {
                     var bundle = item as ManifestBundle;
+
+                    //var commandArgs = string.Format("i -m \"{0}\" -l \"{1}\" -s \"{2}\" -d \"{3}\"",
+                    //  bundle.Manifest,
+                    //  bundle.Dll,
+                    //  bundle.SourcePath,
+                    //  InstallationPathTextBox.Text
+                    //);
+
                     _installer.Install(bundle.Manifest, bundle.Dll, bundle.SourcePath, InstallationPathTextBox.Text);
                 }
             }
